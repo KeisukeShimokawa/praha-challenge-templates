@@ -3,4 +3,5 @@ module.exports = {
   testEnvironment: "node",
   collectCoverage: true,
   collectCoverageFrom: ["**/functions.ts"],
+  verbose: true,
 };
