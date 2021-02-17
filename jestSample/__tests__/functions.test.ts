@@ -11,6 +11,9 @@ import {
 import { DatabaseMock } from '../util';
 import { NameApiService } from '../nameApiService';
 
+jest.mock('../util');
+jest.mock('../nameApiService');
+
 describe('Jestで単体テストを書こう', () => {
   describe('sumOfArray', () => {
     test('[1, 1]を渡すと2が返ってくる', () => {
@@ -91,6 +94,11 @@ describe('Jestで単体テストを書こう', () => {
       save: jest.fn(),
     };
 
+    test('デフォルト引数のコンストラクタ', async () => {
+      await asyncSumOfArraySometimesZero([1, 1]);
+      expect(DatabaseMock).toHaveBeenCalled();
+    });
+
     test('DI: [1, 1]を渡せば2が返ってくる', async () => {
       // Arrange
 
@@ -123,6 +131,14 @@ describe('Jestで単体テストを書こう', () => {
       return nameApiServiceMock();
     };
 
+    test('デフォルト引数のコンストラクタ', async () => {
+      jest
+        .spyOn(NameApiService.prototype, 'getFirstName')
+        .mockResolvedValueOnce('1234');
+      await getFirstNameThrowIfLong(5);
+      expect(NameApiService).toHaveBeenCalled();
+    });
+
     test('取得した名前の長さが指定した最大値よりも短い場合はそのまま返す', async () => {
       // Arrange
       const firstName = '1234';
@@ -142,7 +158,8 @@ describe('Jestで単体テストを書こう', () => {
         await getFirstNameThrowIfLong(5, nameApiServiceMock);
       } catch (e) {
         // Assert
-        expect(e).toThrow(Error);
+        expect(e).toBeInstanceOf(Error);
+        expect(e).toHaveProperty('message', 'first_name too long');
       }
     });
   });
