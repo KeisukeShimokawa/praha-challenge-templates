@@ -32,34 +32,42 @@ describe('Jestで単体テストを書こう', () => {
     });
 
     test('[1]を渡すと1が返ってくる', () => {
+      // Arrange
+      const expected = 1;
       // Act
-      const result = sumOfArray([1]);
+      const actual = sumOfArray([1]);
       // Assert
-      expect(result).toBe(1);
+      expect(actual).toBe(expected);
     });
 
     test('[-2, 2]を渡すと0が返ってくる', () => {
+      // Arrange
+      const expected = 0;
       // Act
-      const result = sumOfArray([-2, 2]);
+      const actual = sumOfArray([-2, 2]);
       // Assert
-      expect(result).toBe(0);
+      expect(actual).toBe(expected);
     });
 
     test('[0.2, 0.1]を渡すと0.3が返ってくる', () => {
+      // Arrange
+      const expected = 0.3;
       // Act
-      const result = sumOfArray([0.2, 0.1]);
+      const actual = sumOfArray([0.2, 0.1]);
       // Assert
-      // expect(result).toBe(0.3) // fails
-      expect(result).toBeCloseTo(0.3);
+      // expect(actual).toBe(expected) --> fails
+      expect(actual).toBeCloseTo(expected);
     });
   });
 
   describe('asyncSumOfArray', () => {
     test('[1, 1]を渡すと2が返ってくる', async () => {
-      // act
-      const result = await asyncSumOfArray([1, 1]);
-      // assert
-      expect(result).toBe(2);
+      // Arrange
+      const expected = 2;
+      // Act
+      const actual = await asyncSumOfArray([1, 1]);
+      // Assert
+      expect(actual).toBe(expected);
     });
 
     test('空の配列を渡すと例外が送出される', async () => {
@@ -67,25 +75,31 @@ describe('Jestで単体テストを書こう', () => {
     });
 
     test('[1]を渡すと1が返ってくる', async () => {
+      // Arrange
+      const expected = 1;
       // Act
-      const result = await asyncSumOfArray([1]);
+      const actual = await asyncSumOfArray([1]);
       // Assert
-      expect(result).toBe(1);
+      expect(actual).toBe(expected);
     });
 
     test('[-2, 2]を渡すと0が返ってくる', async () => {
+      // Arrange
+      const expected = 0;
       // Act
-      const result = await asyncSumOfArray([-2, 2]);
+      const actual = await asyncSumOfArray([-2, 2]);
       // Assert
-      expect(result).toBe(0);
+      expect(actual).toBe(expected);
     });
 
     test('[0.2, 0.1]を渡すと0.3が返ってくる', async () => {
+      // Arrange
+      const expected = 0.3;
       // Act
-      const result = await asyncSumOfArray([0.2, 0.1]);
+      const actual = await asyncSumOfArray([0.2, 0.1]);
       // Assert
-      // expect(result).toBe(0.3) // fails
-      expect(result).toBeCloseTo(0.3);
+      // expect(actual).toBe(expected) --> fails
+      expect(actual).toBeCloseTo(expected);
     });
   });
 
@@ -101,22 +115,22 @@ describe('Jestで単体テストを書こう', () => {
 
     test('DI: [1, 1]を渡せば2が返ってくる', async () => {
       // Arrange
-
+      const expected = 2;
       // Act
-      const result = await asyncSumOfArraySometimesZero([1, 1], databaseMock);
+      const actual = await asyncSumOfArraySometimesZero([1, 1], databaseMock);
       // Arange
       expect(databaseMock.save).toBeCalledWith([1, 1]);
-      expect(result).toBe(2);
+      expect(actual).toBe(expected);
     });
 
     test('DI: []を渡せば0が返ってくる', async () => {
       // Arrange
-
+      const expected = 0;
       // Act
-      const result = await asyncSumOfArraySometimesZero([], databaseMock);
+      const actual = await asyncSumOfArraySometimesZero([], databaseMock);
       // Arange
       expect(databaseMock.save).toBeCalledWith([]);
-      expect(result).toBe(0);
+      expect(actual).toBe(expected);
     });
   });
 
@@ -141,12 +155,12 @@ describe('Jestで単体テストを書こう', () => {
 
     test('取得した名前の長さが指定した最大値よりも短い場合はそのまま返す', async () => {
       // Arrange
-      const firstName = '1234';
-      const nameApiServiceMock = nameAppServiceMockFactory(firstName);
+      const expected = '1234';
+      const nameApiServiceMock = nameAppServiceMockFactory(expected);
       // Act
       const actual = await getFirstNameThrowIfLong(5, nameApiServiceMock);
       // Assert
-      expect(actual).toBe(firstName);
+      expect(actual).toBe(expected);
     });
 
     test('取得した名前の長さが指定した最大値よりも長い場合に例外送出', async () => {
