@@ -1,5 +1,6 @@
 /* eslint-disable jest/no-try-expect */
 /* eslint-disable jest/no-conditional-expect */
+/* eslint-disable jest/no-disabled-tests */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 // todo: ここに単体テストを書いてみましょう！
 import {
@@ -25,10 +26,19 @@ describe('Jestで単体テストを書こう', () => {
       expect(actual).toBe(expected);
     });
 
-    test('空の配列を渡すと例外が送出される', () => {
+    test.skip('空の配列を渡すと例外が送出される', () => {
       expect(() => {
         sumOfArray([]);
       }).toThrow(Error);
+    });
+
+    test('空の配列を渡すと0が返ってくる', () => {
+      // Arrange
+      const expected = 0;
+      // Act
+      const actual = sumOfArray([]);
+      // Assert
+      expect(actual).toBe(expected);
     });
 
     test('[1]を渡すと1が返ってくる', () => {
@@ -70,8 +80,17 @@ describe('Jestで単体テストを書こう', () => {
       expect(actual).toBe(expected);
     });
 
-    test('空の配列を渡すと例外が送出される', async () => {
+    test.skip('空の配列を渡すと例外が送出される', async () => {
       await expect(asyncSumOfArray([])).rejects.toThrow(Error);
+    });
+
+    test('空の配列を渡すと0が返ってくる', async () => {
+      // Arrange
+      const expected = 0;
+      // Act
+      const actual = await asyncSumOfArray([]);
+      // Assert
+      expect(actual).toBe(expected);
     });
 
     test('[1]を渡すと1が返ってくる', async () => {
