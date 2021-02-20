@@ -108,7 +108,7 @@ describe('Jestで単体テストを書こう', () => {
       save: jest.fn(),
     };
 
-    test('デフォルト引数のコンストラクタ', async () => {
+    test('デフォルト引数の検証', async () => {
       await asyncSumOfArraySometimesZero([1, 1]);
       expect(DatabaseMock).toHaveBeenCalled();
     });
@@ -145,7 +145,7 @@ describe('Jestで単体テストを書こう', () => {
       return nameApiServiceMock();
     };
 
-    test('デフォルト引数のコンストラクタ', async () => {
+    test('デフォルト引数の検証', async () => {
       jest
         .spyOn(NameApiService.prototype, 'getFirstName')
         .mockResolvedValueOnce('1234');
