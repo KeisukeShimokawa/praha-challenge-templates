@@ -158,7 +158,9 @@ describe('Jestで単体テストを書こう', () => {
       const nameApiServiceMock = jest.fn().mockImplementation(() => {
         return {
           MAX_LENGTH: 4,
-          getFirstName: () => firstName,
+          getFirstName: jest.fn().mockImplementation(() => {
+            return firstName;
+          }),
         };
       });
       return nameApiServiceMock();
@@ -194,6 +196,24 @@ describe('Jestで単体テストを書こう', () => {
         expect(e).toBeInstanceOf(Error);
         expect(e).toHaveProperty('message', 'first_name too long');
       }
+    });
+
+    test('取得した名前の長さが指定した最大値よりも長い場合に例外送出。no-try-catch', async () => {
+      // Arrange
+      const firstName = '1234567';
+      const nameApiServiceMock = nameAppServiceMockFactory(firstName);
+      // // Act
+      // try {
+      //   await getFirstNameThrowIfLong(5, nameApiServiceMock);
+      // } catch (e) {
+      //   // Assert
+      //   expect(e).toBeInstanceOf(Error);
+      //   expect(e).toHaveProperty('message', 'first_name too long');
+      // }
+
+      await expect(
+        getFirstNameThrowIfLong(5, nameApiServiceMock),
+      ).rejects.toThrow('first_name too long');
     });
   });
 });

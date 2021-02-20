@@ -39,7 +39,7 @@ describe('nameApiService test suite', () => {
     expect(actual).toBe(expected);
   });
 
-  test('axiosで取得した名称の文字列長が4より大きい場合はそのまま返す', async () => {
+  test('axiosで取得した名称の文字列長が4より大きい場合は例外を送出する', async () => {
     // Arrange
     const expected = 'firstName is too long!';
     const user = { first_name: '12345' };
