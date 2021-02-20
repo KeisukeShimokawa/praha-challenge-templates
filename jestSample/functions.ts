@@ -1,8 +1,15 @@
 import { NameApiService } from './nameApiService';
 import { DatabaseMock } from './util';
 
+// 変更前の関数
+// export const sumOfArray = (numbers: number[]): number => {
+//   return numbers.reduce((a: number, b: number): number => a + b);
+// };
+
 export const sumOfArray = (numbers: number[]): number => {
-  return numbers.reduce((a: number, b: number): number => a + b);
+  return numbers.reduce((a: number, b: number): number => {
+    return a + b;
+  }, 0);
 };
 
 export const asyncSumOfArray = (numbers: number[]): Promise<number> => {
@@ -16,12 +23,14 @@ export const asyncSumOfArraySometimesZero = (
   database: DatabaseMock = new DatabaseMock(),
 ): Promise<number> => {
   return new Promise((resolve): void => {
-    try {
-      database.save(numbers);
-      resolve(sumOfArray(numbers));
-    } catch (error) {
-      resolve(0);
-    }
+    // try {
+    //   database.save(numbers);
+    //   resolve(sumOfArray(numbers));
+    // } catch (error) {
+    //   resolve(0);
+    // }
+    database.save(numbers);
+    resolve(sumOfArray(numbers));
   });
 };
 
