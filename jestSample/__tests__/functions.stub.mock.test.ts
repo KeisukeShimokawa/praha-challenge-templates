@@ -15,7 +15,7 @@ describe('Mockを使ったStubの使い方を学ぶ', (): void => {
       typeof NameApiService
     >;
 
-    afterEach((): void => {
+    beforeEach((): void => {
       nameApiServiceMock.mockClear();
     });
 
