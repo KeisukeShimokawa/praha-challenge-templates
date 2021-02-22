@@ -23,7 +23,7 @@ describe('nameApiService test suite', () => {
         first_name: expected,
       },
     };
-    axiosGetSpy.mockResolvedValue(testData);
+    axiosGetSpy.mockResolvedValueOnce(testData);
     // Act
     const actual = await nameApiService.getFirstName();
     // Assert
@@ -38,7 +38,7 @@ describe('nameApiService test suite', () => {
         first_name: expected,
       },
     };
-    axiosGetSpy.mockResolvedValue(testData);
+    axiosGetSpy.mockResolvedValueOnce(testData);
     // Act
     const actual = await nameApiService.getFirstName();
     // Assert
@@ -54,7 +54,7 @@ describe('nameApiService test suite', () => {
         first_name: first_name,
       },
     };
-    axiosGetSpy.mockResolvedValue(testData);
+    axiosGetSpy.mockResolvedValueOnce(testData);
     // Act & Assert
     await expect(nameApiService.getFirstName()).rejects.toThrow(
       new Error(expectedErrorMsg),
