@@ -18,9 +18,12 @@ describe('nameApiService test suite', () => {
   test('axiosで取得した名称の文字列長が4よりも短い場合はそのまま返す', async () => {
     // Arrange
     const expected = '123';
-    const user = { first_name: expected };
-    const result = { data: user };
-    axiosGetSpy.mockResolvedValue(result);
+    const testData = {
+      data: {
+        first_name: expected,
+      },
+    };
+    axiosGetSpy.mockResolvedValue(testData);
     // Act
     const actual = await nameApiService.getFirstName();
     // Assert
@@ -30,28 +33,31 @@ describe('nameApiService test suite', () => {
   test('axiosで取得した名称の文字列長が4の場合はそのまま返す', async () => {
     // Arrange
     const expected = '1234';
-    const user = { first_name: expected };
-    const result = { data: user };
-    axiosGetSpy.mockResolvedValue(result);
+    const testData = {
+      data: {
+        first_name: expected,
+      },
+    };
+    axiosGetSpy.mockResolvedValue(testData);
     // Act
     const actual = await nameApiService.getFirstName();
     // Assert
     expect(actual).toBe(expected);
   });
 
-  test('axiosで取得した名称の文字列長が4より大きい場合はそのまま返す', async () => {
+  test('axiosで取得した名称の文字列長が4より大きい場合は例外を送出する', async () => {
     // Arrange
-    const expected = 'firstName is too long!';
-    const user = { first_name: '12345' };
-    const result = { data: user };
-    axiosGetSpy.mockResolvedValue(result);
-    // Act
-    try {
-      await nameApiService.getFirstName();
-    } catch (err) {
-      // Assert
-      expect(err).toBeInstanceOf(Error);
-      expect(err).toHaveProperty('message', expected);
-    }
+    const expectedErrorMsg = 'firstName is too long!';
+    const first_name = '12345';
+    const testData = {
+      data: {
+        first_name: first_name,
+      },
+    };
+    axiosGetSpy.mockResolvedValue(testData);
+    // Act & Assert
+    await expect(nameApiService.getFirstName()).rejects.toThrow(
+      new Error(expectedErrorMsg),
+    );
   });
 });
