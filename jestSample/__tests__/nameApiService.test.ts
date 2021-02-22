@@ -60,4 +60,15 @@ describe('nameApiService test suite', () => {
       new Error(expectedErrorMsg),
     );
   });
+
+  test('axiosで取得した名称の文字列長が4より大きい場合は例外を送出する。no-try-catch', async () => {
+    // Arrange
+    const expected = 'firstName is too long!';
+    const user = { first_name: '12345' };
+    const result = { data: user };
+    axiosGetSpy.mockResolvedValue(result);
+
+    // Act && Assert
+    await expect(nameApiService.getFirstName()).rejects.toThrow(expected);
+  });
 });
