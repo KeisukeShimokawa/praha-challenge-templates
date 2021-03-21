@@ -1,8 +1,10 @@
-import { NameApiService } from "./nameApiService";
-import { DatabaseMock } from "./util";
+import { NameApiService } from './nameApiService';
+import { DatabaseMock } from './util';
 
 export const sumOfArray = (numbers: number[]): number => {
-  return numbers.reduce((a: number, b: number): number => a + b);
+  return numbers.reduce((a: number, b: number): number => {
+    return a + b;
+  }, 0);
 };
 
 export const asyncSumOfArray = (numbers: number[]): Promise<number> => {
@@ -12,11 +14,11 @@ export const asyncSumOfArray = (numbers: number[]): Promise<number> => {
 };
 
 export const asyncSumOfArraySometimesZero = (
-  numbers: number[]
+  numbers: number[],
+  database: DatabaseMock = new DatabaseMock(),
 ): Promise<number> => {
   return new Promise((resolve): void => {
     try {
-      const database = new DatabaseMock(); // fixme: この関数をテストするには、DatabaseMockの使い方を変える必要がありそう！ヒント：依存性の注入
       database.save(numbers);
       resolve(sumOfArray(numbers));
     } catch (error) {
@@ -26,13 +28,13 @@ export const asyncSumOfArraySometimesZero = (
 };
 
 export const getFirstNameThrowIfLong = async (
-  maxNameLength: number
+  maxNameLength: number,
+  nameApiSerivce: NameApiService = new NameApiService(),
 ): Promise<string> => {
-  const nameApiSerivce = new NameApiService(); // fixme: この関数をテストするには、NameApiServiceの使い方を変える必要がありそう！ヒント：依存性の注入
   const firstName = await nameApiSerivce.getFirstName();
 
   if (firstName.length > maxNameLength) {
-    throw new Error("first_name too long");
+    throw new Error('first_name too long');
   }
   return firstName;
 };

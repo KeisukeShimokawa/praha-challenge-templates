@@ -7,7 +7,7 @@ export class DatabaseMock {
   public save(_: number[]): void {
     // memo: 課題のために、あえて時々saveが失敗するようにしている
     if (getRandomInt(10) < 2) {
-      throw new Error("fail!");
+      throw new Error('fail!');
     }
   }
 }
